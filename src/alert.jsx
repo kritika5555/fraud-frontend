@@ -9,7 +9,8 @@ function Alert() {
 
     const handleIgnore = () => {
         setShowAlert(false);
-        alert("You chose to ignore.");
+        alert("You chose to ignore."); 
+        
     };
 
     const handleAction = () => {
