@@ -7,10 +7,12 @@ function Alert() {
 
     const [showAlert, setShowAlert] = useState(true);
 
-    const handleIgnore = () => {
+    function handleIgnore() {
+        console.log('hello')
         setShowAlert(false);
-        alert("You chose to ignore."); 
-        
+        alert("You chose to ignore.");
+        navigate('/payment')
+
     };
 
     const handleAction = () => {

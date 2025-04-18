@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import { _axios } from "./config/axios";
 import { useNavigate } from "react-router-dom";
+
 const ReportForm = () => {
     const data = JSON.parse(localStorage.getItem("data") ?? "{}")
     const navigate = useNavigate()
@@ -57,6 +58,7 @@ const ReportForm = () => {
         <div className="flex items-center justify-center min-h-screen bg-gray-900">
             <div className="bg-gradient-to-b from-blue-100 to-white p-6 rounded-lg shadow-lg max-w-md w-full relative">
                 <div className="absolute right-2 top-0.5 text-2xl cursor-pointer" onClick={() => navigate("/home")}>&times;</div>
+                    
 
                 <h2 className="text-center text-lg font-semibold mb-4">Report Form</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">

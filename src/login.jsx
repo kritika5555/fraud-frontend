@@ -19,6 +19,7 @@ export default function Login() {
             ...prev,
             [name]: value
         }));
+       
     };
 
     const togglePasswordVisibility = () => {
@@ -39,7 +40,7 @@ export default function Login() {
             localStorage.setItem('user', JSON.stringify(response.data.user));
 
             // Redirect to home
-            navigate('/');
+            navigate('/home');
         } catch (error) {
             setErrorMessage(
                 error.response?.data?.message ||

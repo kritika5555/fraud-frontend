@@ -12,6 +12,8 @@ export default function Home() {
     const [isLoading, setIsLoading] = useState(false);
     const [scanResult, setScanResult] = useState(null);
     const fileInputRef = useRef(null);
+    const userData = JSON.parse(localStorage.getItem("user"))
+    console.log("🚀 ~ Home ~ userData:", userData)
 
     // Fetch transactions on component mount
     useEffect(() => {
@@ -21,7 +23,6 @@ export default function Home() {
     const fetchTransactions = async () => {
         // In a real app, this would be an API call
         setIsLoading(true);
-
         // Mock data - replace with actual API call
         setTimeout(() => {
             setTransactions([
@@ -73,8 +74,17 @@ export default function Home() {
         <div className="flex flex-col min-h-screen bg-gray-50">
             <header className="bg-white shadow-sm">
                 <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex justify-between items-center">
-                    <h1 className="text-2xl font-bold text-gray-900">Welcome username!</h1>
+                    <h1 className="text-2xl font-bold text-gray-900">{`Welcome ${userData?.first_name} !`}</h1>
                     <div className="flex items-center space-x-4">
+                        <button
+                            onClick={() => {
+                                navigate("/")
+                                localStorage.clear()
+                            }}
+                            className="p-2 rounded-full hover:bg-gray-100"
+                        >
+                            logout
+                        </button>
                         <button
                             onClick={() => fetchTransactions()}
                             className="p-2 rounded-full hover:bg-gray-100"
@@ -94,7 +104,7 @@ export default function Home() {
                                 <User size={32} className="text-blue-600" />
                             </div>
                             <div>
-                                <h2 className="text-xl font-medium text-gray-900">{user.username}</h2>
+                                <h2 className="text-xl font-medium text-gray-900">{`${userData?.first_name} ${userData?.last_name}`}</h2>
                                 <p className="text-gray-500">Account Profile</p>
                             </div>
                         </div>
@@ -111,7 +121,7 @@ export default function Home() {
                             </div>
                             <div className="bg-gray-50 p-4 rounded-md">
                                 <p className="text-2xl font-bold text-gray-900">
-                                    {showBalance ? `$${user.balance.toLocaleString(undefined, {
+                                    {showBalance ? `Rs.${user.balance.toLocaleString(undefined, {
                                         minimumFractionDigits: 2,
                                         maximumFractionDigits: 2
                                     })}` : '••••••••'}
@@ -187,7 +197,7 @@ export default function Home() {
                                             <p className={`text-sm font-medium ${transaction.type === 'DEPOSIT' ? 'text-green-600' : 'text-gray-900'
                                                 }`}>
                                                 {transaction.type === 'DEPOSIT' ? '+' : '-'}
-                                                ${transaction.amount.toFixed(2)}
+                                                Rs.{transaction.amount.toFixed(2)}
                                             </p>
                                         </div>
                                     </li>

@@ -1,10 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const FraudAlert = ({ onIgnore, onTakeAction }) => {
+  const navigate = useNavigate()
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-900">
       <div className="bg-gradient-to-b from-blue-100 to-white p-6 rounded-lg shadow-lg text-center max-w-md relative">
-        <div className="absolute right-2 top-0.5 text-2xl cursor-pointer">&times;</div>
+        <div className="absolute right-2 top-0.5 text-2xl cursor-pointer"
+          onClick={() => navigate("/home")}
+        >&times;</div>
         <div className="flex flex-col items-center">
           <div className="bg-black text-white rounded-full p-2">
             <strong>!</strong>

@@ -1,13 +1,14 @@
 import { useState, useRef } from 'react';
-import { Eye, EyeOff, Mail, Lock, User, UserPlus, PhoneCallIcon } from 'lucide-react';
+import { Eye, EyeOff, Lock, User, UserPlus, PhoneCallIcon } from 'lucide-react';
 import { _axios } from './config/axios';
 import { useNavigate, Link } from 'react-router-dom';
 
 export default function Register() {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        fullName: '',
-        email: '',
+        firstName: '',
+        lastName: '',
+        phone: '',
         password: '',
         confirmPassword: ''
     });
@@ -27,32 +28,25 @@ export default function Register() {
             [name]: value
         }));
 
-        // Check password strength if it's the password field
         if (name === 'password' && value) {
             checkPasswordStrength(value);
         }
     };
 
-
-
-
     const checkPasswordStrength = (password) => {
         let score = 0;
         let message = '';
 
-        // Length check
         if (password.length < 8) {
             message = 'Password is too short';
         } else {
             score += 1;
         }
 
-        // Complexity checks
         if (/[A-Z]/.test(password)) score += 1;
         if (/[0-9]/.test(password)) score += 1;
         if (/[^A-Za-z0-9]/.test(password)) score += 1;
 
-        // Set message based on score
         if (score === 2) message = 'Password strength: Weak';
         if (score === 3) message = 'Password strength: Medium';
         if (score === 4) message = 'Password strength: Strong';
@@ -68,13 +62,11 @@ export default function Register() {
         setShowConfirmPassword(!showConfirmPassword);
     };
 
-    //pass data to backend
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
         setErrorMessage('');
 
-        // Password confirmation check
         if (formData.password !== formData.confirmPassword) {
             setErrorMessage('Passwords do not match');
             setIsLoading(false);
@@ -82,15 +74,13 @@ export default function Register() {
         }
 
         try {
-            // Replace with your actual API endpoint
             const response = await _axios.post('/register/', {
-                name: formData.fullName,
+                name: `${formData.firstName} ${formData.lastName}`,
                 phone: formData.phone,
                 password: formData.password
             });
 
-            // Handle successful registration
-            navigate('/login/', {
+            navigate('/', {
                 state: { message: 'Registration successful! Please sign in.' }
             });
         } catch (error) {
@@ -103,7 +93,6 @@ export default function Register() {
         }
     };
 
-    // Get color class based on password strength
     const getPasswordStrengthColor = () => {
         if (passwordStrength.score === 0) return 'text-gray-400';
         if (passwordStrength.score <= 2) return 'text-red-500';
@@ -134,25 +123,47 @@ export default function Register() {
                     )}
 
                     <form className="space-y-6" onSubmit={handleSubmit}>
-                        <div>
-                            <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">
-                                Full Name
-                            </label>
-                            <div className="mt-1 relative rounded-md shadow-sm">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <User size={18} className="text-gray-400" />
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
+                                    First Name
+                                </label>
+                                <div className="mt-1 relative rounded-md shadow-sm">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <User size={18} className="text-gray-400" />
+                                    </div>
+                                    <input
+                                        id="firstName"
+                                        name="firstName"
+                                        type="text"
+                                        required
+                                        value={formData.firstName}
+                                        onChange={handleChange}
+                                        className="pl-10 block w-full py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                        placeholder="Ram"
+                                    />
                                 </div>
-                                <input
-                                    id="fullName"
-                                    name="fullName"
-                                    type="text"
-                                    autoComplete="name"
-                                    required
-                                    value={formData.fullName}
-                                    onChange={handleChange}
-                                    className="pl-10 block w-full py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                    placeholder="Ram Bahadur Limbu"
-                                />
+                            </div>
+
+                            <div>
+                                <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
+                                    Last Name
+                                </label>
+                                <div className="mt-1 relative rounded-md shadow-sm">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <User size={18} className="text-gray-400" />
+                                    </div>
+                                    <input
+                                        id="lastName"
+                                        name="lastName"
+                                        type="text"
+                                        required
+                                        value={formData.lastName}
+                                        onChange={handleChange}
+                                        className="pl-10 block w-full py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                        placeholder="Limbu"
+                                    />
+                                </div>
                             </div>
                         </div>
 
@@ -168,7 +179,6 @@ export default function Register() {
                                     id="phone"
                                     name="phone"
                                     type="text"
-
                                     required
                                     value={formData.phone}
                                     onChange={handleChange}
@@ -250,7 +260,6 @@ export default function Register() {
                             )}
                         </div>
 
-
                         <div>
                             <button
                                 type="submit"
@@ -273,7 +282,6 @@ export default function Register() {
                     </form>
                 </div>
 
-                {/* Footer */}
                 <div className="mt-8">
                     <p className="text-center text-sm text-gray-500">
                         © 2025 Fraud Detection System. All rights reserved.
