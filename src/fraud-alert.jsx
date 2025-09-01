@@ -17,7 +17,8 @@ const FraudAlert = ({ onIgnore, onTakeAction }) => {
           <h2 className="text-lg font-semibold mt-2">Alert Notification</h2>
         </div>
         <p className="mt-4 text-gray-800">
-          This account has fraudulent activities. Do you wish to proceed or take action?
+          <strong> This account has fraudulent activities. Do you wish to Ignore & Proceed or Take Action?
+          </strong>
         </p>
         <div className="mt-6 flex justify-between">
           <button

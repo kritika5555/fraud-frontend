@@ -5,7 +5,6 @@ const ProtectedRoute = () => {
     const navigate = useNavigate();
     const isAuthenticated = !!localStorage.getItem("token");
 
-    console.log("🚀 ~ ProtectedRoute ~ isAuthenticated:", isAuthenticated)
     useEffect(() => {
         if (!isAuthenticated) {
             return navigate("/");

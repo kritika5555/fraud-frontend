@@ -12,6 +12,7 @@ import Users from './users';
 import FraudReports from './admin_fraud_report';
 import Dashboard from "./dashboard";
 import ProtectedRoute from "./routes/protected";
+import UserProfile from "./myProfile";
 
 function App() {
 
@@ -29,8 +30,12 @@ function App() {
           <Route path="/success" element={<NoFraudAlert />} />
 
           <Route path="/form" element={<ReportForm />} />
+          {/* <Route path="/features" element={<Features />} /> */}
+
+          <Route path="/profile" element={<UserProfile />} />
+
+          <Route path="/payment" element={<PaymentPage />} />
         </Route>
-        <Route path="/payment" element={<PaymentPage />} />
 
         // admin part is below
         <Route path="/admin" element={<AdminLayout />} />

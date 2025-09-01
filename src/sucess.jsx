@@ -18,7 +18,7 @@ const NoFraudAlert = () => {
           <h2 className="text-lg font-semibold mt-2">Alert Notification</h2>
         </div>
         <p className="mt-4 text-gray-800">
-          This account has no signs of fraudulent activity. Feel free to Proceed!
+          <strong>This account has no signs of fraudulent activity. Feel free to Ignore &  Proceed!</strong>
         </p>
         <div className="mt-6 flex justify-between">
           <button
